@@ -15,15 +15,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
         ]
-        extra_kwargs = {
-            "password": {"write_only": True}  # Ensure password is write-only
-        }
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(
             username=validated_data["username"],
             email=validated_data.get("email", ""),
-            password=validated_data["password"],
             role=validated_data.get("role", "PROCUREMENT"),  # Default role
             phone=validated_data.get("phone", ""),
             first_name=validated_data.get("first_name", ""),

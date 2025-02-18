@@ -21,25 +21,46 @@ for codename, name in permissions:
     )
 
 # Fetch permissions
-view_permission = Permission.objects.get(codename="view_purchaseorder", content_type=content_type)
-add_permission = Permission.objects.get(codename="add_purchaseorder", content_type=content_type)
-change_permission = Permission.objects.get(codename="change_purchaseorder", content_type=content_type)
-delete_permission = Permission.objects.get(codename="delete_purchaseorder", content_type=content_type)
-confirm_permission = Permission.objects.get(codename="confirm_purchaseorder", content_type=content_type)
-approve_permission = Permission.objects.get(codename="approve_purchaseorder", content_type=content_type)
+view_permission = Permission.objects.get(
+    codename="view_purchaseorder", content_type=content_type
+)
+add_permission = Permission.objects.get(
+    codename="add_purchaseorder", content_type=content_type
+)
+change_permission = Permission.objects.get(
+    codename="change_purchaseorder", content_type=content_type
+)
+delete_permission = Permission.objects.get(
+    codename="delete_purchaseorder", content_type=content_type
+)
+confirm_permission = Permission.objects.get(
+    codename="confirm_purchaseorder", content_type=content_type
+)
+approve_permission = Permission.objects.get(
+    codename="approve_purchaseorder", content_type=content_type
+)
 
 # Create groups if they don’t exist
-procurement_team, _ = Group.objects.get_or_create(name="Procurement Team")
+procurement_team, _ = Group.objects.get_or_create(name="PROCUREMENT")
+print(procurement_team)
 coo, _ = Group.objects.get_or_create(name="COO")
 md, _ = Group.objects.get_or_create(name="MD")
 vendor, _ = Group.objects.get_or_create(name="Vendor")
 
 # Assign permissions to groups
-procurement_team.permissions.set([view_permission, add_permission, change_permission, delete_permission])
+procurement_team.permissions.set(
+    [view_permission, add_permission, change_permission, delete_permission]
+)
 
-coo.permissions.set([view_permission, confirm_permission])  # COO can view and confirm purchase orders
-md.permissions.set([view_permission, approve_permission])   # MD can view and approve purchase orders
+coo.permissions.set(
+    [view_permission, confirm_permission]
+)  # COO can view and confirm purchase orders
+md.permissions.set(
+    [view_permission, approve_permission]
+)  # MD can view and approve purchase orders
 
-vendor.permissions.set([])  # Vendors should only see their assigned orders via code logic
+vendor.permissions.set(
+    [view_permission]
+)  # Vendors should only see their assigned orders via code logic
 
 print("Permissions and groups assigned successfully!")

@@ -12,7 +12,6 @@ class VendorRepository:
         return Vendor.objects.get(uuid=uuid)
 
     def create_vendor(self, data):
-
         return Vendor.objects.create(**data)
 
     def update_vendor(self, uuid, data):

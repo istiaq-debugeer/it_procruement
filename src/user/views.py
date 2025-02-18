@@ -15,7 +15,7 @@ class UserListView(generics.ListAPIView):
 
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-    permission_classes = [IsAuthenticated]  # Only authenticated users can view the list
+    # permission_classes = [IsAuthenticated]  # Only authenticated users can view the list
 
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
