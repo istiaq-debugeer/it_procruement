@@ -1,5 +1,5 @@
 # purchase_order/repositories.py
-from models import Vendor
+from purchase_orders.models import Vendor
 
 
 class VendorRepository:
@@ -26,4 +26,4 @@ class VendorRepository:
     def delete_vendor(self, uuid):
 
         vendor = self.get_vendor_by_uuid(uuid)
-        vendor.delete()
+        vendor.soft_delete()

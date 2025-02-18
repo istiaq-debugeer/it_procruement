@@ -1,7 +1,7 @@
 # purchase_order/services.py
-from models import Product
-from repository.product_repo import ProductRepository
 from django.core.exceptions import ValidationError
+
+from purchase_orders.repository.product_repo import ProductRepository
 
 
 class ProductService:

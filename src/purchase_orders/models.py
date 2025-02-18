@@ -1,10 +1,10 @@
 # purchase_order/models.py
-from django.db import models
 from core.abstract_model import CommonClass
+from django.db import models
 from user.models import CustomUser
 
 
-class Vendor(models.Model):
+class Vendor(CommonClass):
     uuid = models.UUIDField(primary_key=True, editable=False, unique=True)
     name = models.CharField(max_length=100)
     address = models.TextField()
@@ -15,7 +15,7 @@ class Vendor(models.Model):
         return self.name
 
 
-class Product(models.Model):
+class Product(CommonClass):
     uuid = models.UUIDField(primary_key=True, editable=False, unique=True)
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -39,7 +39,7 @@ class PurchaseOrder(CommonClass):
         return f"PO {self.po_number}"
 
 
-class PurchaseOrderItem(models.Model):
+class PurchaseOrderItem(CommonClass):
     uuid = models.UUIDField(primary_key=True, editable=False, unique=True)
     purchase_order = models.ForeignKey(PurchaseOrder, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

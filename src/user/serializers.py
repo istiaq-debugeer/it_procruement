@@ -20,7 +20,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        """Create and return a new user with encrypted password."""
         user = CustomUser.objects.create_user(
             username=validated_data["username"],
             email=validated_data.get("email", ""),
@@ -33,7 +32,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        """Update and return an existing user."""
         instance.username = validated_data.get("username", instance.username)
         instance.email = validated_data.get("email", instance.email)
         instance.role = validated_data.get("role", instance.role)

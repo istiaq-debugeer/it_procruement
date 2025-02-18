@@ -1,6 +1,7 @@
 # purchase_order/serializers.py
 from rest_framework import serializers
-from models import Vendor
+
+from purchase_orders.models import Vendor
 
 
 class VendorSerializer(serializers.ModelSerializer):

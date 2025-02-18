@@ -1,11 +1,12 @@
 from datetime import datetime
+
 from django.db import models
 
 
 class CommonClass(models.Model):
     is_delete = models.BooleanField(default=False, blank=True)
     deleted_at = models.DateTimeField(null=True, blank=True)
-    creted_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

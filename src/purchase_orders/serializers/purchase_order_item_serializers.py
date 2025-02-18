@@ -1,6 +1,7 @@
 # purchase_order/serializers.py
 from rest_framework import serializers
-from models import PurchaseOrderItem
+
+from purchase_orders.models import PurchaseOrderItem
 
 
 class PurchaseOrderItemSerializer(serializers.ModelSerializer):

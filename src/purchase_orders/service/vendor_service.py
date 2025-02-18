@@ -1,6 +1,7 @@
 # purchase_order/services.py
 from rest_framework.exceptions import ValidationError
-from .repositories import VendorRepository
+
+from purchase_orders.repository.vendor_repo import VendorRepository
 
 
 class VendorService:

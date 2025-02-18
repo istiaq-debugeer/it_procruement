@@ -1,17 +1,20 @@
 # purchase_order/views.py
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
-from .services import PurchaseOrderItemService
-from .serializers import PurchaseOrderItemSerializer
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from purchase_orders.serializers.purchase_order_item_serializers import (
+    PurchaseOrderItemSerializer,
+)
+from purchase_orders.service.purchase_order_item_service import PurchaseOrderService
 
 
 class PurchaseOrderItemCreateView(APIView):
     def post(self, request):
         serializer = PurchaseOrderItemSerializer(data=request.data)
         if serializer.is_valid():
-            service = PurchaseOrderItemService()
+            service = PurchaseOrderService()
             try:
                 item = service.create_purchase_order_item(serializer.validated_data)
                 return Response(
@@ -25,7 +28,7 @@ class PurchaseOrderItemCreateView(APIView):
 
 class PurchaseOrderItemDetailView(APIView):
     def get(self, request, uuid):
-        service = PurchaseOrderItemService()
+        service = PurchaseOrderService()
         try:
             item = service.get_purchase_order_item(uuid)
             return Response(
@@ -37,7 +40,7 @@ class PurchaseOrderItemDetailView(APIView):
     def put(self, request, uuid):
         serializer = PurchaseOrderItemSerializer(data=request.data)
         if serializer.is_valid():
-            service = PurchaseOrderItemService()
+            service = PurchaseOrderService()
             try:
                 item = service.update_purchase_order_item(
                     uuid, serializer.validated_data
@@ -50,7 +53,7 @@ class PurchaseOrderItemDetailView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, uuid):
-        service = PurchaseOrderItemService()
+        service = PurchaseOrderService()
         try:
             service.delete_purchase_order_item(uuid)
             return Response(status=status.HTTP_204_NO_CONTENT)
@@ -60,7 +63,7 @@ class PurchaseOrderItemDetailView(APIView):
 
 class PurchaseOrderItemListView(APIView):
     def get(self, request):
-        service = PurchaseOrderItemService()
+        service = PurchaseOrderService()
         items = service.get_all_purchase_order_items()
         serializer = PurchaseOrderItemSerializer(items, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
