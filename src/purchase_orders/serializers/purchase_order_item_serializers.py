@@ -1,6 +1,7 @@
 # purchase_order/serializers.py
 from rest_framework import serializers
-from models import PurchaseOrderItem
+
+from purchase_orders.models import PurchaseOrderItem
 
 
 class PurchaseOrderItemSerializer(serializers.ModelSerializer):
@@ -19,7 +20,7 @@ class PurchaseOrderItemSerializer(serializers.ModelSerializer):
         ]
 
     def validate_quantity(self, value):
-        """Validate that the quantity is greater than zero."""
+
         if value <= 0:
             raise serializers.ValidationError("Quantity must be greater than zero.")
         return value

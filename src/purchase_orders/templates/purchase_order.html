@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Order</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .header { text-align: center; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .table th, .table td { border: 1px solid black; padding: 10px; text-align: center; }
+        .total { text-align: right; margin-top: 20px; font-weight: bold; }
+        .section { margin-bottom: 20px; }
+        .section h2 { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Purchase Order</h1>
+        <p><strong>Date:</strong> {{ date }}</p>
+        <p><strong>PO No:</strong> {{ po_number }}</p>
+        <p><strong>QTN Ref:</strong> {{ qtn_ref }}</p>
+    </div>
+
+    <div class="section">
+        <h2>PO Issued To:</h2>
+        <p><strong>Vendor Name:</strong> {{ vendor_name }}</p>
+        <p><strong>Address:</strong> {{ vendor_address }}</p>
+        <p><strong>Phone:</strong> {{ vendor_phone }}</p>
+        <p><strong>Email:</strong> {{ vendor_email }}</p>
+        <p><strong>Attention:</strong> {{ vendor_attention }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Bill To:</h2>
+        <p>{{ bill_to_name }}</p>
+        <p>{{ bill_to_address }}</p>
+        <p>{{ bill_to_phone }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Subject: {{ subject }}</h2>
+        <p>{{ subject_description }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Order Details:</h2>
+        <table class="table">
+            <tr>
+                <th>Component</th>
+                <th>UOM</th>
+                <th>Quantity</th>
+                <th>Unit Price (Tk)</th>
+                <th>Total Price (Tk)</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.uom }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.unit_price }}</td>
+                <td>{{ item.total_price }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="section">
+        <p><strong>Sub - Total:</strong> Tk {{ sub_total }}</p>
+        <p><strong>VAT:</strong> {{ vat }}%</p>
+        <p><strong>Grand Total Including VAT and AIT:</strong> Tk {{ grand_total }}</p>
+        <p><strong>Total Price:</strong> Tk {{ total_price }}</p>
+        <p><strong>In Words:</strong> {{ total_in_words }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Standard Terms and Conditions:</h2>
+        <p>{{ terms_and_conditions }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Payment Terms:</h2>
+        <p>{{ payment_terms }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Delivery Location:</h2>
+        <p>{{ delivery_location }}</p>
+    </div>
+
+    <div class="section">
+        <p>If the mentioned terms and conditions are acceptable to you, you are requested to sign the duplicate copy as a token of your acceptance.</p>
+    </div>
+
+    <div class="section">
+        <p><strong>Administrator</strong></p>
+        <p><strong>COO</strong></p>
+        <p><strong>CFO</strong></p>
+        <p>{{ company_name }}</p>
+        <p>{{ company_address }}</p>
+        <p>{{ company_phone }}</p>
+        <p>{{ company_email }}</p>
+    </div>
+
+    <div class="section">
+        <p><strong>Managing Director</strong></p>
+        <p>{{ md_name }}</p>
+    </div>
+</body>
+</html>

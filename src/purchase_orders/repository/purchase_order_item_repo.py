@@ -4,7 +4,8 @@ from models import PurchaseOrderItem
 
 class PurchaseOrderItemRepository:
     def get_all_purchase_order_items(self):
-        return PurchaseOrderItem.objects.all()
+        query=PurchaseOrderItem.objects.select_related('Product','CustomUser').all()
+        return query
 
     def get_purchase_order_item_by_uuid(self, uuid):
         return PurchaseOrderItem.objects.get(uuid=uuid)
@@ -24,4 +25,4 @@ class PurchaseOrderItemRepository:
     def delete_purchase_order_item(self, uuid):
 
         item = self.get_purchase_order_item_by_uuid(uuid)
-        item.delete()
+        item.soft_delete()

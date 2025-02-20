@@ -15,16 +15,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
             "first_name",
             "last_name",
         ]
-        extra_kwargs = {
-            "password": {"write_only": True}  # Ensure password is write-only
-        }
 
     def create(self, validated_data):
-        """Create and return a new user with encrypted password."""
         user = CustomUser.objects.create_user(
             username=validated_data["username"],
             email=validated_data.get("email", ""),
-            password=validated_data["password"],
             role=validated_data.get("role", "PROCUREMENT"),  # Default role
             phone=validated_data.get("phone", ""),
             first_name=validated_data.get("first_name", ""),
@@ -33,7 +28,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        """Update and return an existing user."""
         instance.username = validated_data.get("username", instance.username)
         instance.email = validated_data.get("email", instance.email)
         instance.role = validated_data.get("role", instance.role)

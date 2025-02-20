@@ -1,24 +1,45 @@
-# purchase_order/repositories.py
-from models import PurchaseOrder
+from purchase_orders.models import PurchaseOrder
 
 
 class PurchaseOrderRepository:
-    def get_all_purchase_orders(self):
-        return PurchaseOrder.objects.all()
+    @staticmethod
+    def get_by_id(purchase_order_id):
 
-    def get_purchase_order_by_uuid(self, uuid):
-        return PurchaseOrder.objects.get(uuid=uuid)
+        try:
+            return PurchaseOrder.objects.get(id=purchase_order_id)
+        except PurchaseOrder.DoesNotExist:
+            raise ValueError("Purchase order not found")
 
-    def create_purchase_order(self, data):
-        return PurchaseOrder.objects.create(**data)
+    @staticmethod
+    def create(order_data):
 
-    def update_purchase_order(self, uuid, data):
-        purchase_order = self.get_purchase_order_by_uuid(uuid)
-        for key, value in data.items():
+        return PurchaseOrder.objects.create(**order_data)
+
+    @staticmethod
+    def update(purchase_order, updated_data):
+
+        for key, value in updated_data.items():
             setattr(purchase_order, key, value)
         purchase_order.save()
         return purchase_order
 
-    def delete_purchase_order(self, uuid):
-        purchase_order = self.get_purchase_order_by_uuid(uuid)
-        purchase_order.delete()
+    @staticmethod
+    def cancel(purchase_order):
+
+        purchase_order.status = "Cancelled"
+        purchase_order.save()
+        return purchase_order
+
+    @staticmethod
+    def confirm(purchase_order):
+
+        purchase_order.status = "Confirmed"
+        purchase_order.save()
+        return purchase_order
+
+    @staticmethod
+    def approve(purchase_order):
+
+        purchase_order.status = "Approved"
+        purchase_order.save()
+        return purchase_order

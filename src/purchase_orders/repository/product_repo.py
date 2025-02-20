@@ -1,5 +1,5 @@
 # purchase_order/repositories.py
-from models import Product
+from purchase_orders.models import Product
 
 
 class ProductRepository:
@@ -16,13 +16,14 @@ class ProductRepository:
         return product
 
     def get_all_products(self):
-        return Product.objects.all()
+        query=Product.objects.all()
+        return query
 
     def get_product_by_uuid(self, uuid):
-
+        
         return Product.objects.get(uuid=uuid)
 
     def delete_product(self, uuid):
 
         product = self.get_product_by_uuid(uuid)
-        product.delete()
+        product.soft_delete()
